@@ -9,15 +9,22 @@ sed -i "s/PRODUCT_NAME/${PRODUCT}/g" $CODIS_HOME/codisconf/config.ini
 
 # initialize slot
 ${CODIS_HOME}/bin/codis-config -c ${CODIS_HOME}/codisconf/config.ini slot init -f
+sleep 3
 
 # config codis-server
 sed -i "s/LOCAL_IP/${HOST_IP}/g" $CODIS_HOME/serverconf/conf/server_6900.conf
 
 # start codis-server
 $CODIS_HOME/bin/codis-server $CODIS_HOME/serverconf/conf/server_6900.conf
-
+sleep 3
 # config codis-server group
 $CODIS_HOME/bin/codis-config -c ${CODIS_HOME}/codisconf/config.ini server add 1 ${HOST_IP}:6900 master
+sleep 3
 
 # config codis-server group slot
 $CODIS_HOME/bin/codis-config -c ${CODIS_HOME}/codisconf/config.ini slot range-set 0 1023 1 online
+while true
+do
+   echo a | tee /tmp/a.log
+   sleep 1000000
+done
